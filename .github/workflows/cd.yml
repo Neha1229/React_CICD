@@ -23,6 +23,10 @@ jobs:
 
             - name: "Download build files"
               uses: actions/download-artifact@v3
+              with:
+                name: build
+                run-id: ${{ github.event.workflow_run.id }}
+                github-token: ${{ github.token }}
             
-            - name: "List directories"
-              run: ls -R
+            - name: "Deploy to vercel"
+              run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --confirm --name=my-valid-project-name
